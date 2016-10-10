@@ -1,0 +1,44 @@
+<resources>
+    <string name="app_name">eTicked</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_switch_view">More</string>
+    <string name="error_card_communication">Error reading from eTicket</string>
+    <string name="error_card_incompatible">Incompatible smartcard</string>
+    <string name="error_card_no_eticket">No eTicket detected</string>
+    <string name="error_open_web_browser">Please install a web browser</string>
+    <string name="info_read_card_successful">eTicket read</string>
+    <string name="action_delete_history">Clear history</string>
+    <string name="action_open_wiki" translatable="false">Wiki</string>
+    <string name="info_place_card">Place eTicket at the back of your phone.</string>
+    <string name="info_not_available_short">N/A</string>
+    <string name="field_date">Date</string>
+    <string name="field_time">Time</string>
+    <string name="field_terminal_id">Terminal</string>
+    <string name="field_operator_id">Operator</string>
+    <string name="field_station_id">Station</string>
+    <string name="field_station_name">Name of Station</string>
+    <string name="field_permit_id">Permit</string>
+    <string name="field_product_id">Product</string>
+    <string name="field_route_id">Route</string>
+    <string name="field_sam_id" translatable="false">SAM-ID</string>
+    <string name="field_sam_sn" translatable="false">SAM-SN</string>
+    <string name="field_asn" translatable="false">ASN</string>
+    <string name="field_psn" translatable="false">PSN</string>
+    <string name="label_journey">Journey</string>
+    <string name="label_activation_application">Activation of application</string>
+    <string name="label_activation_ticket">Activation of ticket</string>
+    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
+    <string name="field_valid_from">Valid from</string>
+    <string name="field_valid_thru">Valid thru</string>
+    <string name="label_application_details">Application details</string>
+    <string name="field_app_version" translatable="false">Version</string>
+    <string name="field_appdetail_organisation">Organisation</string>
+    <string name="field_appdetail_id">Application ID</string>
+    <string name="action_switch_applog">Application Log</string>
+    <string name="action_switch_appdetails">Application Details</string>
+    <string name="error_missing_nfc_title">NFC missing</string>
+    <string name="error_missing_nfc_message">Your device does not have an NFC module.</string>
+    <string name="action_ok" translatable="false">OK</string>
+    <string name="close_drawer">Close Navigation</string>
+    <string name="open_drawer">Open Navigation</string>
+</resources>

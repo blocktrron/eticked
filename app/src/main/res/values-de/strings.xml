@@ -1,0 +1,36 @@
+<resources>
+    <string name="app_name">eTicked</string>
+    <string name="action_settings">Einstellungen</string>
+    <string name="error_card_communication">Fehler beim lesen des eTicket</string>
+    <string name="error_card_incompatible">Inkompatible Smartcard</string>
+    <string name="error_card_no_eticket">Kein eTicket erkannt</string>
+    <string name="error_open_web_browser">Bitte installiere einen Internetbrowser</string>
+    <string name="info_read_card_successful">eTicket gelesen</string>
+    <string name="action_delete_history">Verlauf löschen</string>
+    <string name="info_place_card">Halte das eTicket an die Rückseite deines Smartphone</string>
+    <string name="info_not_available_short">N/V</string>
+    <string name="field_date">Datum</string>
+    <string name="field_time">Zeit</string>
+    <string name="field_terminal_id">Terminal</string>
+    <string name="field_operator_id">Betreiber</string>
+    <string name="field_station_id">Station</string>
+    <string name="field_station_name">Stationsname</string>
+    <string name="field_permit_id">Fahrerlaubnis</string>
+    <string name="field_product_id">Produkt</string>
+    <string name="field_route_id">Strecke</string>
+    <string name="label_journey">Fahrttransaktion</string>
+    <string name="label_activation_application">Aktivierung der Applikation</string>
+    <string name="label_activation_ticket">Aktivierung des Ticket</string>
+    <string name="action_switch_view">Mehr</string>
+    <string name="field_valid_from">Gültigkeitsbeginn</string>
+    <string name="field_valid_thru">Gültigkeitsende</string>
+    <string name="label_application_details">Applikationsdetails</string>
+    <string name="error_missing_nfc_message">Ihr Gerät verfügt über kein NFC Modul.</string>
+    <string name="action_switch_appdetails">Applikationsdetails</string>
+    <string name="action_switch_applog">Applikationslog</string>
+    <string name="close_drawer">Navigation schließen</string>
+    <string name="error_missing_nfc_title">NFC nicht vorhanden</string>
+    <string name="field_appdetail_id">Applikations ID</string>
+    <string name="field_appdetail_organisation">Organisation</string>
+    <string name="open_drawer">Navigation öffnen</string>
+</resources>
