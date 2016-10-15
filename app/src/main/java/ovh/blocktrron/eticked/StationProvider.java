@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import ovh.blocktrron.eticked.dataset.eticket.Station;
@@ -24,11 +25,9 @@ public class StationProvider {
         BufferedReader bufferedReader = null;
         String outputString = "";
         try {
-            bufferedReader = new BufferedReader(
-                    new InputStreamReader(context
-                            .getAssets()
-                            .open("rmv_stops.txt")));
-            int buffersize = 512000;
+            InputStream stream = context.getAssets().open(context.getString(R.string.asset_stationjson));
+            bufferedReader = new BufferedReader(new InputStreamReader(stream));
+            int buffersize = stream.available();
             char[] charBuff = new char[buffersize];
             while (bufferedReader.read(charBuff, 0, buffersize) != -1) {
                 outputString += String.copyValueOf(charBuff, 0, buffersize);

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">eTicked</string>
+    <string name="asset_stationjson">rmv_stops.txt</string>
     <string name="action_settings">Settings</string>
     <string name="action_switch_view">More</string>
     <string name="error_card_communication">Error reading from eTicket</string>
