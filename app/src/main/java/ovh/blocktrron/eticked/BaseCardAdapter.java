@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import ovh.blocktrron.eticked.dataset.Cards.ApplicationActivationCard;
 import ovh.blocktrron.eticked.dataset.Cards.ApplicationDetailsCard;
@@ -128,43 +129,46 @@ public class BaseCardAdapter extends RecyclerView.Adapter<BaseCardAdapter.ViewHo
 
         public void loadData(BaseCard applicationLogEntry) {
             JourneyCard journeyCard = (JourneyCard) applicationLogEntry;
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            SimpleDateFormat stf = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+            SimpleDateFormat stf = new SimpleDateFormat("HH:mm:ss", Locale.GERMANY);
             asn.setText(
-                    journeyCard.transactionData.getApplicationSequenceNumber().toString());
+                    String.format(Locale.GERMANY, "%d", journeyCard.transactionData.getApplicationSequenceNumber()));
             psn.setText(
-                    journeyCard.journeyTransactionData.getPermitSequenceNumber().toString());
+                    String.format(Locale.GERMANY, "%d", journeyCard.journeyTransactionData.getPermitSequenceNumber()));
             date.setText(sdf.format(journeyCard.transactionData.getDateTime().getCalendar().getTime()));
             time.setText(stf.format(journeyCard.transactionData.getDateTime().getCalendar().getTime()));
             station.setText(
-                    journeyCard.transactionData.location.getID().toString());
+                    String.format(Locale.GERMANY, "%d", journeyCard.transactionData.location.getID()));
             terminal.setText(
-                    journeyCard.transactionData.getTerminalID().getID().toString()
-                            + "-" +
-                            journeyCard.transactionData.getTerminalID().getOrganisationID().toString());
+                    String.format(Locale.GERMANY, "%d-%d",
+                            journeyCard.transactionData.getTerminalID().getID(),
+                            journeyCard.transactionData.getTerminalID().getOrganisationID()));
             operator.setText(
-                    journeyCard.transactionData.location.getOrganisationID().toString());
+                    String.format(Locale.GERMANY, "%d", journeyCard.transactionData.location.getOrganisationID()));
             Permit permit = journeyCard.journeyTransactionData.getPermitID();
             permit_id.setText(
-                    permit.getID().toString()
-                            + "-" + permit.getOrganisationID().toString());
+                    String.format(Locale.GERMANY, "%d-%d",
+                            permit.getID(),
+                            permit.getOrganisationID()));
             Product product = journeyCard.journeyTransactionData.getProductID();
             product_id.setText(
-                    product.getID().toString()
-                            + "-" + product.getOrganisationID().toString());
+                    String.format(Locale.GERMANY, "%d-%d",
+                            product.getID(),
+                            product.getOrganisationID()));
             if (journeyCard.journeyTransactionData.getRouteVariant().getRouteName() != null) {
                 route_id.setText(
-                        journeyCard.journeyTransactionData.getRouteVariant().getRoute().toString()
-                                + " (" + journeyCard.journeyTransactionData.getRouteVariant().getRouteName()
-                                + ")");
+                        String.format(Locale.GERMANY, "%d (%s)",
+                                journeyCard.journeyTransactionData.getRouteVariant().getRoute(),
+                                journeyCard.journeyTransactionData.getRouteVariant().getRouteName()));
             } else {
                 route_id.setText(
-                        journeyCard.journeyTransactionData.getRouteVariant().getRoute().toString());
+                        String.format(Locale.GERMANY, "%d",
+                                journeyCard.journeyTransactionData.getRouteVariant().getRoute()));
             }
             sam_id.setText(
-                    journeyCard.transactionData.getTransactionID().getSamID().toString());
+                    String.format(Locale.GERMANY, "%d", journeyCard.transactionData.getTransactionID().getSamID()));
             sam_sn.setText(
-                    journeyCard.transactionData.getTransactionID().getSamSequenceNumber().toString());
+                    String.format(Locale.GERMANY, "%d", journeyCard.transactionData.getTransactionID().getSamSequenceNumber()));
             if (journeyCard.transactionData.location.getName() != null) {
                 station_name.setText(journeyCard.transactionData.location.getName());
             }
@@ -193,21 +197,22 @@ public class BaseCardAdapter extends RecyclerView.Adapter<BaseCardAdapter.ViewHo
 
         public void loadData(BaseCard applicationLogEntry) {
             TicketActivationCard ticketActivationCard = (TicketActivationCard) applicationLogEntry;
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            SimpleDateFormat stf = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+            SimpleDateFormat stf = new SimpleDateFormat("HH:mm:ss", Locale.GERMANY);
             asn.setText(
-                    ticketActivationCard.transactionData.getApplicationSequenceNumber().toString());
+                    String.format(Locale.GERMANY, "%d", ticketActivationCard.transactionData.getApplicationSequenceNumber()));
             date.setText(sdf.format(ticketActivationCard.transactionData.getDateTime().getCalendar().getTime()));
             time.setText(stf.format(ticketActivationCard.transactionData.getDateTime().getCalendar().getTime()));
             terminal.setText(
-                    ticketActivationCard.transactionData.getTerminalID().getID().toString() + "-" +
-                            ticketActivationCard.transactionData.getTerminalID().getOrganisationID().toString());
+                    String.format(Locale.GERMANY, "%d-%d",
+                            ticketActivationCard.transactionData.getTerminalID().getID(),
+                            ticketActivationCard.transactionData.getTerminalID().getOrganisationID()));
             operator.setText(
-                    ticketActivationCard.transactionData.location.getOrganisationID().toString());
+                    String.format(Locale.GERMANY, "%d", ticketActivationCard.transactionData.location.getOrganisationID()));
             sam_id.setText(
-                    ticketActivationCard.transactionData.getTransactionID().getSamID().toString());
+                    String.format(Locale.GERMANY, "%d", ticketActivationCard.transactionData.getTransactionID().getSamID()));
             sam_sn.setText(
-                    ticketActivationCard.transactionData.getTransactionID().getSamSequenceNumber().toString());
+                    String.format(Locale.GERMANY, "%d", ticketActivationCard.transactionData.getTransactionID().getSamSequenceNumber()));
         }
     }
 
@@ -233,10 +238,10 @@ public class BaseCardAdapter extends RecyclerView.Adapter<BaseCardAdapter.ViewHo
 
         public void loadData(BaseCard applicationLogEntry) {
             ApplicationActivationCard applicationActivationCard = (ApplicationActivationCard) applicationLogEntry;
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            SimpleDateFormat stf = new SimpleDateFormat("HH:mm:ss");
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+            SimpleDateFormat stf = new SimpleDateFormat("HH:mm:ss", Locale.GERMANY);
             asn.setText(
-                    applicationActivationCard.transactionData.getApplicationSequenceNumber().toString());
+                    String.format(Locale.GERMANY, "%d", applicationActivationCard.transactionData.getApplicationSequenceNumber()));
             date.setText(sdf.format(applicationActivationCard.transactionData.getDateTime().getCalendar().getTime()));
             time.setText(stf.format(applicationActivationCard.transactionData.getDateTime().getCalendar().getTime()));
             terminal.setText(
@@ -246,11 +251,11 @@ public class BaseCardAdapter extends RecyclerView.Adapter<BaseCardAdapter.ViewHo
                             applicationActivationCard.transactionData.getTerminalID()
                                     .getOrganisationID().toString());
             operator.setText(
-                    applicationActivationCard.transactionData.location.getOrganisationID().toString());
+                    String.format(Locale.GERMANY, "%d", applicationActivationCard.transactionData.location.getOrganisationID()));
             sam_id.setText(
-                    applicationActivationCard.transactionData.getTransactionID().getSamID().toString());
+                    String.format(Locale.GERMANY, "%d", applicationActivationCard.transactionData.getTransactionID().getSamID()));
             sam_sn.setText(
-                    applicationActivationCard.transactionData.getTransactionID().getSamSequenceNumber().toString());
+                    String.format(Locale.GERMANY, "%d", applicationActivationCard.transactionData.getTransactionID().getSamSequenceNumber()));
         }
     }
 
@@ -286,16 +291,16 @@ public class BaseCardAdapter extends RecyclerView.Adapter<BaseCardAdapter.ViewHo
 
         public void loadData(BaseCard applicationLogEntry) {
             ApplicationDetailsCard applicationDetailsCard = (ApplicationDetailsCard) applicationLogEntry;
-            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
-            applicationId.setText(Long.toString(applicationDetailsCard.getApplicationData()
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+            applicationId.setText(String.format(Locale.GERMANY, "%d", applicationDetailsCard.getApplicationData()
                     .getStaticData().getApplikationInstanzID().getAppInstanz()));
-            applicationOrganisation.setText(Long.toString(applicationDetailsCard.getApplicationData()
+            applicationOrganisation.setText(String.format(Locale.GERMANY, "%d", applicationDetailsCard.getApplicationData()
                     .getStaticData().getApplikationInstanzID().getOrganisation()));
             applicationValidFrom.setText(sdf.format(applicationDetailsCard.getApplicationData()
                     .getStaticData().getValidFrom().getCalendar().getTime()));
             applicationValidThru.setText(sdf.format(applicationDetailsCard.getApplicationData()
                     .getStaticData().getValidThru().getCalendar().getTime()));
-            applicationVersion.setText(Integer.toString(applicationDetailsCard.getApplicationData()
+            applicationVersion.setText(String.format(Locale.GERMANY, "%d", applicationDetailsCard.getApplicationData()
                     .getStaticData().getVersion()));
         }
     }
