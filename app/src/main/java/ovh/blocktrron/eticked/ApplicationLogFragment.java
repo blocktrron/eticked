@@ -55,6 +55,14 @@ public class ApplicationLogFragment extends Fragment {
         updateApplicationLogRecyclerView();
     }
 
+    public void updateApplicationLog(ArrayList<BaseCard> applicationLog) {
+        baseCardAdapter.setDataset(applicationLog);
+    }
+
+    public ArrayList<BaseCard> getApplicationLog() {
+        return this.applicationLog;
+    }
+
     private void updateApplicationLogRecyclerView() {
         if (recyclerView != null) {
             recyclerView.setAdapter(baseCardAdapter);

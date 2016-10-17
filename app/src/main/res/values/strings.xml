@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">eTicked</string>
-    <string name="asset_stationjson">rmv_stops.txt</string>
     <string name="action_settings">Settings</string>
     <string name="action_switch_view">More</string>
     <string name="error_card_communication">Error reading from eTicket</string>
@@ -42,4 +41,5 @@
     <string name="action_ok" translatable="false">OK</string>
     <string name="close_drawer">Close Navigation</string>
     <string name="open_drawer">Open Navigation</string>
+    <string name="error_fetching_station">Error fetching a stations name</string>
 </resources>

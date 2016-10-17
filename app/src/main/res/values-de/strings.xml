@@ -33,4 +33,5 @@
     <string name="field_appdetail_id">Applikations ID</string>
     <string name="field_appdetail_organisation">Organisation</string>
     <string name="open_drawer">Navigation öffnen</string>
+    <string name="error_fetching_station">Fehler beim anfordern eines Stationsnames</string>
 </resources>

@@ -1,78 +1,71 @@
 package ovh.blocktrron.eticked;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
-import org.json.JSONArray;
+import com.github.kevinsawicki.http.HttpRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 import ovh.blocktrron.eticked.dataset.eticket.Station;
 
 public class StationProvider {
-    private JSONArray jsonArray;
+    interface OnStationResultListener {
+        void onStationResult(Station station);
+    }
+    private OnStationResultListener listener;
 
-    public StationProvider(Context context) {
-        String inputString = getInputString(context);
-        jsonArray = parseInputStringToJSON(inputString);
+    public StationProvider(OnStationResultListener listener) {
+        this.listener = listener;
     }
 
-    private String getInputString(Context context) {
-        BufferedReader bufferedReader = null;
-        String outputString = "";
-        try {
-            InputStream stream = context.getAssets().open(context.getString(R.string.asset_stationjson));
-            bufferedReader = new BufferedReader(new InputStreamReader(stream));
-            int buffersize = stream.available();
-            char[] charBuff = new char[buffersize];
-            while (bufferedReader.read(charBuff, 0, buffersize) != -1) {
-                outputString += String.copyValueOf(charBuff, 0, buffersize);
-            }
-        } catch (IOException ioe) {
-            ioe.printStackTrace();
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return outputString;
+    private String buildRequestString(int id) {
+        String request_string_format = "http://www.rmv.de/auskunft/bin/jp/ajax-getstop.exe/dny" +
+                "?start=1" +
+                "&tpl=suggest2json" +
+                "&REQ0JourneyStopsS0A=1" +
+                "&getstop=1" +
+                "&noSession=yes" +
+                "&REQ0JourneyStopsB=1" +
+                "&REQ0JourneyStopsS0G=%d";
+        return String.format(request_string_format, id);
     }
 
-    private JSONArray parseInputStringToJSON(String inputString) {
-        try {
-            return new JSONArray(inputString);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public Station getStation(int id) {
+    public void getStation(int id) {
         id += 3000000;
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject o = null;
-            try {
-                o = jsonArray.getJSONObject(i);
-                if (o.getInt("id") == id) {
+
+        new AsyncTask<Integer, Integer, Station>() {
+            @Override
+            protected Station doInBackground(Integer... integers) {
+                String request_string = buildRequestString(integers[0]);
+
+                try {
+                    String response_body = HttpRequest.get(request_string).body();
+                    String response_json = response_body.substring(8, response_body.length()-22);
+
+                    JSONObject root_obj = new JSONObject(response_json);
+                    JSONObject first_result = root_obj.getJSONArray("suggestions").getJSONObject(0);
+
+                    String station_name = first_result.getString("value");
+
                     Station station = new Station();
-                    station.setId(o.getInt("id"));
-                    station.setName(o.getString("name"));
-                    station.setX(o.getInt("x"));
-                    station.setY(o.getInt("y"));
+                    station.setId(integers[0]);
+                    station.setName(station_name);
                     return station;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    return null;
+                } catch (HttpRequest.HttpRequestException e) {
+                    e.printStackTrace();
+                    return null;
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
-        }
-        return null;
+
+            protected void onPostExecute(Station station) {
+                listener.onStationResult(station);
+            }
+        }.execute(id);
     }
 }

@@ -29,7 +29,7 @@ import ovh.blocktrron.eticked.dataset.Cards.JourneyCard;
 import ovh.blocktrron.eticked.dataset.Cards.TicketActivationCard;
 import ovh.blocktrron.eticked.dataset.eticket.Station;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements StationProvider.OnStationResultListener {
     public static final String KEY_CURRENT_FRAGMENT = "current_fragment";
     public static final String KEY_CURRENT_NAVDRAWER_ELEMENT = "current_navdrawer_element";
 
@@ -69,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this, getClass())
                 .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
 
-        stationProvider = new StationProvider(getApplicationContext());
+        stationProvider = new StationProvider(this);
 
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nvView);
@@ -251,13 +251,7 @@ public class MainActivity extends AppCompatActivity {
                         if (byteResponse[0] == (byte) 0xF1) {
                             JourneyCard tc = new JourneyCard(byteResponse);
                             int stationID = tc.transactionData.location.getID().intValue();
-                            Station station = stationProvider.getStation(stationID);
-                            if (station != null) {
-                                tc.transactionData.location.setName(station.getName());
-                            } else {
-                                tc.transactionData.location
-                                        .setName(getString(R.string.info_not_available_short));
-                            }
+                            stationProvider.getStation(stationID);
                             applicationLog.add(tc);
                         } else if (byteResponse[0] == (byte) 0xF6) {
                             TicketActivationCard ta = new TicketActivationCard(byteResponse);
@@ -322,5 +316,27 @@ public class MainActivity extends AppCompatActivity {
                 currentFragment = ApplicationDetailFragment.TAG;
                 break;
         }
+    }
+
+    @Override
+    public void onStationResult(Station station) {
+        if (station == null) {
+            Snackbar.make(findViewById(R.id.coordinatorLayout),
+                    R.string.error_fetching_station,
+                    Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        ArrayList<BaseCard> applicationLog = applicationLogFragment.getApplicationLog();
+        for (int i = 0; i < applicationLog.size(); i++) {
+            BaseCard baseCard = applicationLog.get(i);
+            if (baseCard.describeContents() == BaseCard.TAG_JOURNEY) {
+                JourneyCard journeyCard = (JourneyCard) baseCard;
+                if (journeyCard.transactionData.location.getID() + 3000000 == station.getId()) {
+                    journeyCard.transactionData.location.setName(station.getName());
+                    applicationLog.set(i, journeyCard);
+                }
+            }
+        }
+        applicationLogFragment.updateApplicationLog(applicationLog);
     }
 }
